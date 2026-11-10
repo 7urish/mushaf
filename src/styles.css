@@ -1,0 +1,156 @@
+@import "tailwindcss";
+@import "./font-faces.css";
+
+@theme {
+  --color-bg: #0e1411;
+  --color-surface: #17201b;
+  --color-surface-2: #212b25;
+  --color-fg: #f4efe4;
+  --color-muted: #a8b2a4;
+  --color-faint: #738076;
+  --color-line: #2d3b33;
+  --color-gold: #d4b072;
+  --color-gold-fill: #d4b072;
+  --color-on-gold: #1a140c;
+  --color-ink: #0a0e0c;
+  --font-ui: "Readex Pro", "Noto Sans Arabic", "Segoe UI", sans-serif;
+  --font-quran: "Scheherazade New", "Noto Naskh Arabic", "Amiri", serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+[data-theme="day"] {
+  color-scheme: light;
+  --color-bg: #f3ecdf;
+  --color-surface: #faf6ee;
+  --color-surface-2: #e9e0cf;
+  --color-fg: #1c1712;
+  --color-muted: #6d6458;
+  --color-faint: #8d8476;
+  --color-line: #e0d5c2;
+  --color-gold: #7a5620;
+  --color-gold-fill: #c6a15b;
+  --color-on-gold: #1a140c;
+  --color-ink: #1a140c;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    background: var(--color-bg);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-ui);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-gold) 35%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+.quran-text {
+  font-family: var(--font-quran);
+  font-weight: 400;
+  line-height: 2.35;
+}
+
+.basmala {
+  font-family: var(--font-quran);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.ayah-block {
+  border-inline-start: 3px solid transparent;
+  border-radius: 0.75rem;
+  padding: 0.4rem 0.7rem;
+  scroll-margin-top: 5.5rem;
+  scroll-margin-bottom: 8rem;
+}
+
+.ayah-block[data-active="true"] {
+  background: color-mix(in oklab, var(--color-gold) 12%, transparent);
+}
+
+.ayah-block[data-playing="true"] {
+  border-inline-start-color: var(--color-gold);
+}
+
+.ayah-mark {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  margin-inline: 0.4rem;
+  padding: 0;
+  border: 1px solid var(--color-gold);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-gold);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.ayah-mark::before {
+  content: "";
+  position: absolute;
+  inset: -0.55rem;
+}
+
+.scroller {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.dock {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.sr-audio {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrim {
+  background: color-mix(in oklab, var(--color-ink) 62%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
